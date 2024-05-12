@@ -1116,9 +1116,6 @@ struct eth_dev *gether_setup_name(struct usb_gadget *g,
 	} else {
 		net->addr_assign_type = NET_ADDR_SET;
 	}
-	if (get_ether_addr(host_addr, dev->host_mac))
-		dev_warn(&g->dev,
-			"using random %s ethernet address\n", "host");
 
 	ether_addr_copy(dev->host_mac, a);
 	pr_debug("%s, rndis: %x:%x:%x:%x:%x:%x\n", __func__,
