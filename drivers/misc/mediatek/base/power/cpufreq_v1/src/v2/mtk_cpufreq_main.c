@@ -1274,8 +1274,6 @@ static int _mt_cpufreq_target_index(struct cpufreq_policy *policy, unsigned int 
 	mt_cpufreq_set_by_wfi_load_cluster(cid, next_freq);
 	j = _search_available_freq_idx(p, next_freq, CPUFREQ_RELATION_L);
 	p->idx_opp_tbl = j;
-	arch_set_freq_scale(policy->cpus, next_freq,
-			policy->cpuinfo.max_freq);
 
 out:
 	cpufreq_unlock(flags);

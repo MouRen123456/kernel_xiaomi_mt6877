@@ -13,13 +13,33 @@ int mt_cpufreq_set_by_wfi_load_cluster(unsigned int cluster_id,
 #ifdef CONFIG_HYBRID_CPU_DVFS
 	enum mt_cpu_dvfs_id id = (enum mt_cpu_dvfs_id) cluster_id;
 
+#if !IS_ENABLED(CONFIG_MTK_CPU_CTRL)
+	struct mt_cpu_dvfs *p = id_to_cpu_dvfs(id);
+	struct cpufreq_policy *policy = p->mt_policy;
+	int cpu;
+#endif
+
 	if (freq < mt_cpufreq_get_freq_by_idx(id, 15))
 		freq = mt_cpufreq_get_freq_by_idx(id, 15);
 
 	if (freq > mt_cpufreq_get_freq_by_idx(id, 0))
 		freq = mt_cpufreq_get_freq_by_idx(id, 0);
 
+#if !IS_ENABLED(CONFIG_MTK_CPU_CTRL)
+	if (policy != NULL) {
+		for_each_cpu(cpu, policy->cpus)
+			trace_cpu_frequency(freq, cpu);
+	}
+#endif
+
 	cpuhvfs_set_dvfs(id, freq);
+
+#if !IS_ENABLED(CONFIG_MTK_CPU_CTRL)
+	if (policy != NULL)
+		policy->cur = freq;
+
+	arch_set_freq_scale(p->mt_policy->cpus, freq, p->mt_policy->cpuinfo.max_freq);
+#endif
 #endif
 
 	return 0;

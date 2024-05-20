@@ -25,7 +25,7 @@ int mt_cpufreq_set_by_wfi_load_cluster(unsigned int cluster_id,
 	enum mt_cpu_dvfs_id id = (enum mt_cpu_dvfs_id) cluster_id;
 	struct mt_cpu_dvfs *p = id_to_cpu_dvfs(id);
 #if defined(CONFIG_MACH_MT6893) || defined(CONFIG_MACH_MT6877) \
-	|| defined(CONFIG_MACH_MT6781)
+	|| defined(CONFIG_MACH_MT6781) || !IS_ENABLED(CONFIG_MTK_CPU_CTRL)
 	struct cpufreq_policy *policy = p->mt_policy;
 	int cpu;
 #endif
@@ -42,7 +42,7 @@ int mt_cpufreq_set_by_wfi_load_cluster(unsigned int cluster_id,
 	//#endif /* CONFIG_MTK_CM_MGR */
 
 #if defined(CONFIG_MACH_MT6893) || defined(CONFIG_MACH_MT6877) \
-	|| defined(CONFIG_MACH_MT6781)
+	|| defined(CONFIG_MACH_MT6781) || !IS_ENABLED(CONFIG_MTK_CPU_CTRL)
 	if(policy != NULL) {
 		for_each_cpu(cpu, policy->cpus)
 			trace_cpu_frequency(freq, cpu);
@@ -50,7 +50,7 @@ int mt_cpufreq_set_by_wfi_load_cluster(unsigned int cluster_id,
 #endif
 	cpuhvfs_set_dvfs(id, freq);
 #if defined(CONFIG_MACH_MT6893) || defined(CONFIG_MACH_MT6877) \
-	|| defined(CONFIG_MACH_MT6781)
+	|| defined(CONFIG_MACH_MT6781) || !IS_ENABLED(CONFIG_MTK_CPU_CTRL)
 	if(policy != NULL)
 		policy->cur = freq;
 #endif
