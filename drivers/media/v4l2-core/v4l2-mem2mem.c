@@ -516,6 +516,7 @@ int v4l2_m2m_qbuf(struct file *file, struct v4l2_m2m_ctx *m2m_ctx,
 			__func__);
 		return -EPERM;
 	}
+
 	ret = vb2_qbuf(vq, vdev->v4l2_dev->mdev, buf);
 	if (ret)
 		return ret;
@@ -523,7 +524,8 @@ int v4l2_m2m_qbuf(struct file *file, struct v4l2_m2m_ctx *m2m_ctx,
 	/* Adjust MMAP memory offsets for the CAPTURE queue */
 	v4l2_m2m_adjust_mem_offset(vq, buf);
 
-	v4l2_m2m_try_schedule(m2m_ctx);
+	if (!(buf->flags & V4L2_BUF_FLAG_IN_REQUEST))
+		v4l2_m2m_try_schedule(m2m_ctx);
 
 	return 0;
 }
