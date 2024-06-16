@@ -14,9 +14,10 @@ enum io_pgtable_fmt {
 	ARM_64_LPAE_S1,
 	ARM_64_LPAE_S2,
 	ARM_V7S,
-	ARM_V8L_FAST,
 	IO_PGTABLE_NUM_FMTS,
 };
+
+#define ARM_V8L_FAST ((unsigned int)-1)
 
 /**
  * struct iommu_gather_ops - IOMMU callbacks for TLB and page table management.
