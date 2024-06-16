@@ -37,10 +37,6 @@ io_pgtable_init_table[IO_PGTABLE_NUM_FMTS] = {
 	[ARM_64_LPAE_S1] = &io_pgtable_arm_64_lpae_s1_init_fns,
 	[ARM_64_LPAE_S2] = &io_pgtable_arm_64_lpae_s2_init_fns,
 #endif
-struct io_pgtable_init_fns io_pgtable_av8l_fast_init_fns = {
-	.alloc	= av8l_fast_alloc_pgtable,
-	.free	= av8l_fast_free_pgtable,
-};
 #ifdef CONFIG_IOMMU_IO_PGTABLE_ARMV7S
 	[ARM_V7S] = &io_pgtable_arm_v7s_init_fns,
 #endif
