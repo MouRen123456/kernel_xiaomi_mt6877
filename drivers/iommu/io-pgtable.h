@@ -15,6 +15,7 @@ enum io_pgtable_fmt {
 	ARM_64_LPAE_S1,
 	ARM_64_LPAE_S2,
 	ARM_V7S,
+	ARM_V8L_FAST,
 	IO_PGTABLE_NUM_FMTS,
 };
 
